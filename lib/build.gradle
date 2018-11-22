@@ -21,7 +21,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.github.yangwb1259883028:viewpager_helper:1.0.0'
     implementation 'com.github.yangwb1259883028:res:1.0.3'
 }
