@@ -1,16 +1,16 @@
 <resources>
 
     <!-- 指示器间距 -->
-    <dimen name="lib_indicator_indicator_margin">@dimen/res_px_5</dimen>
+    <dimen name="lib_indicator_indicator_margin">@dimen/qb_px_5</dimen>
 
     <!-- 指示器正常宽度 -->
-    <dimen name="lib_indicator_indicator_width_normal">@dimen/res_px_5</dimen>
+    <dimen name="lib_indicator_indicator_width_normal">@dimen/qb_px_5</dimen>
     <!-- 指示器正常高度 -->
-    <dimen name="lib_indicator_indicator_height_normal">@dimen/res_px_5</dimen>
+    <dimen name="lib_indicator_indicator_height_normal">@dimen/qb_px_5</dimen>
 
     <!-- 指示器选中宽度 -->
-    <dimen name="lib_indicator_indicator_width_selected">@dimen/res_px_5</dimen>
+    <dimen name="lib_indicator_indicator_width_selected">@dimen/qb_px_5</dimen>
     <!-- 指示器选中高度 -->
-    <dimen name="lib_indicator_indicator_height_selected">@dimen/res_px_5</dimen>
+    <dimen name="lib_indicator_indicator_height_selected">@dimen/qb_px_5</dimen>
 
 </resources>

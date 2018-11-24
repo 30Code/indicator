@@ -7,7 +7,7 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 20181123
+        versionCode 20181124
         versionName "1.0.1"
     }
 
@@ -22,7 +22,6 @@ android {
 
 dependencies {
     api 'com.github.yangwb1259883028:viewpager_helper:1.0.1.v1'
-    compileOnly 'com.github.yangwb1259883028:res:1.0.3'
     compileOnly 'com.android.support:support-v4:27.1.1'
 }
 
