@@ -20,7 +20,7 @@ import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
-import cn.linhome.lib.R;
+import cn.linhome.lib.indicator.R;
 import cn.linhome.lib.indicator.item.IPagerIndicatorItem;
 import cn.linhome.lib.indicator.model.PositionData;
 

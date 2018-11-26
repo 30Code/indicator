@@ -23,7 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import cn.linhome.lib.R;
+import cn.linhome.lib.indicator.R;
 import cn.linhome.lib.indicator.adapter.PagerIndicatorAdapter;
 import cn.linhome.lib.indicator.group.PagerIndicatorGroup;
 import cn.linhome.lib.indicator.item.IPagerIndicatorItem;
