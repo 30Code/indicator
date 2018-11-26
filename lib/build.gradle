@@ -6,7 +6,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 27
         versionCode 20181126
         versionName "1.0.3"
     }
@@ -25,7 +25,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.yangwb1259883028:viewpager_helper:1.0.1.v3'
+    implementation 'com.github.yangwb1259883028:viewpager_helper:1.0.1.v4'
     compileOnly 'com.android.support:support-v4:+'
 }
 
