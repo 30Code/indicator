@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <cn.linhome.indicator.view.Banner
+        android:id="@+id/banner1"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:page_left_margin="20dp"
+        app:page_right_margin="20dp"
+        tools:ignore="MissingConstraints" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
