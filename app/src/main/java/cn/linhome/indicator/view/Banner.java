@@ -27,17 +27,17 @@ import static android.support.v4.view.ViewPager.PageTransformer;
 
 public class Banner extends FrameLayout implements OnPageChangeListener
 {
-    private boolean isScroll = true;
-    private boolean isLoop = true;
-    private int count = 0;
-    private int currentItem = -1;
-    private int lastPosition;
+    private boolean mIsScroll = true;
+    private boolean mIsLoop = true;
+    private int mCount = 0;
+    private int mCurrentItem = -1;
+    private int mLastPosition;
     private List mDatas;
-    private HolderCreator<BannerViewHolder> creator;
-    private BannerViewPager viewPager;
-    private BannerPagerAdapter adapter;
+    private HolderCreator<BannerViewHolder> mCreator;
+    private BannerViewPager mViewPager;
+    private BannerPagerAdapter mPagerAdapter;
     private OnPageChangeListener mOnPageChangeListener;
-    private OnBannerClickListener listener;
+    private OnBannerClickListener mListener;
     private int mPageLeftMargin;
     private int mPageRightMargin;
     private static final int NUM = 5000;
@@ -63,12 +63,12 @@ public class Banner extends FrameLayout implements OnPageChangeListener
     {
         handleTypedArray(context, attrs);
         View view = LayoutInflater.from(context).inflate(R.layout.banner, this, true);
-        viewPager = (BannerViewPager) view.findViewById(R.id.bannerViewPager);
+        mViewPager = (BannerViewPager) view.findViewById(R.id.bannerViewPager);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT,
                 LayoutParams.MATCH_PARENT);
         params.leftMargin = mPageLeftMargin;
         params.rightMargin = mPageRightMargin;
-        viewPager.setLayoutParams(params);
+        mViewPager.setLayoutParams(params);
         initViewPagerScroll();
     }
 
@@ -90,9 +90,9 @@ public class Banner extends FrameLayout implements OnPageChangeListener
         {
             Field mField = ViewPager.class.getDeclaredField("mScroller");
             mField.setAccessible(true);
-            BannerScroller scroller = new BannerScroller(viewPager.getContext());
+            BannerScroller scroller = new BannerScroller(mViewPager.getContext());
 //            scroller.setDuration(scrollTime);
-            mField.set(viewPager, scroller);
+            mField.set(mViewPager, scroller);
         } catch (Exception e)
         {
 
@@ -106,7 +106,7 @@ public class Banner extends FrameLayout implements OnPageChangeListener
 
     public Banner setLoop(boolean isLoop)
     {
-        this.isLoop = isLoop;
+        this.mIsLoop = isLoop;
         return this;
     }
 
@@ -120,7 +120,7 @@ public class Banner extends FrameLayout implements OnPageChangeListener
     {
         try
         {
-            viewPager.setPageTransformer(true, transformer.newInstance());
+            mViewPager.setPageTransformer(true, transformer.newInstance());
         } catch (Exception e)
         {
 
@@ -130,9 +130,9 @@ public class Banner extends FrameLayout implements OnPageChangeListener
 
     public Banner setOffscreenPageLimit(int limit)
     {
-        if (viewPager != null)
+        if (mViewPager != null)
         {
-            viewPager.setOffscreenPageLimit(limit);
+            mViewPager.setOffscreenPageLimit(limit);
         }
         return this;
     }
@@ -140,14 +140,14 @@ public class Banner extends FrameLayout implements OnPageChangeListener
     public Banner setPages(List<?> datas, HolderCreator<BannerViewHolder> creator)
     {
         this.mDatas = datas;
-        this.creator = creator;
-        this.count = datas.size();
+        this.mCreator = creator;
+        this.mCount = datas.size();
         return this;
     }
 
     public Banner start()
     {
-        if (count > 0)
+        if (mCount > 0)
         {
             setData();
         }
@@ -156,35 +156,35 @@ public class Banner extends FrameLayout implements OnPageChangeListener
 
     private void setData()
     {
-        if (isLoop)
+        if (mIsLoop)
         {
-            if (currentItem == -1)
+            if (mCurrentItem == -1)
             {
-                currentItem = NUM / 2 - ((NUM / 2) % count) + 1;
+                mCurrentItem = NUM / 2 - ((NUM / 2) % mCount) + 1;
             }
-            lastPosition = 1;
+            mLastPosition = 1;
         } else
         {
-            if (currentItem == -1)
+            if (mCurrentItem == -1)
             {
-                currentItem = 0;
+                mCurrentItem = 0;
             }
-            lastPosition = 0;
+            mLastPosition = 0;
         }
-        if (adapter == null)
+        if (mPagerAdapter == null)
         {
-            adapter = new BannerPagerAdapter();
-            viewPager.addOnPageChangeListener(this);
+            mPagerAdapter = new BannerPagerAdapter();
+            mViewPager.addOnPageChangeListener(this);
         }
-        viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(currentItem);
-        viewPager.setOffscreenPageLimit(count);
-        if (isScroll && count > 1)
+        mViewPager.setAdapter(mPagerAdapter);
+        mViewPager.setCurrentItem(mCurrentItem);
+        mViewPager.setOffscreenPageLimit(mCount);
+        if (mIsScroll && mCount > 1)
         {
-            viewPager.setScrollable(true);
+            mViewPager.setScrollable(true);
         } else
         {
-            viewPager.setScrollable(false);
+            mViewPager.setScrollable(false);
         }
         startAutoPlay();
     }
@@ -228,17 +228,18 @@ public class Banner extends FrameLayout implements OnPageChangeListener
 
     private int toRealPosition(int position)
     {
-        //int realPosition = (position - 1) % count;
         int realPosition;
-        if (isLoop)
+        if (mIsLoop)
         {
-            realPosition = (position - 1 + count) % count;
+            realPosition = (position - 1 + mCount) % mCount;
         } else
         {
-            realPosition = (position + count) % count;
+            realPosition = (position + mCount) % mCount;
         }
         if (realPosition < 0)
-            realPosition += count;
+        {
+            realPosition += mCount;
+        }
         return realPosition;
     }
 
@@ -256,11 +257,14 @@ public class Banner extends FrameLayout implements OnPageChangeListener
                 return 0;
             } else
             {
-                if (isLoop)
-                    //return mDatas.size() + 2;
+                if (mIsLoop)
+                {
                     return NUM;
+                }
                 else
+                {
                     return mDatas.size();
+                }
             }
         }
 
@@ -273,11 +277,11 @@ public class Banner extends FrameLayout implements OnPageChangeListener
         @Override
         public Object instantiateItem(ViewGroup container, final int position)
         {
-            if (creator == null)
+            if (mCreator == null)
             {
                 throw new RuntimeException("[Banner] --> The layout is not specified,please set holder");
             }
-            BannerViewHolder holder = creator.createViewHolder();
+            BannerViewHolder holder = mCreator.createViewHolder();
 
             View view = holder.createView(container.getContext());
             container.addView(view);
@@ -286,14 +290,14 @@ public class Banner extends FrameLayout implements OnPageChangeListener
             {
                 holder.onBind(container.getContext(), toRealPosition(position), mDatas.get(toRealPosition(position)));
             }
-            if (listener != null)
+            if (mListener != null)
             {
                 view.setOnClickListener(new OnClickListener()
                 {
                     @Override
                     public void onClick(View v)
                     {
-                        listener.onBannerClick(toRealPosition(position));
+                        mListener.onBannerClick(toRealPosition(position));
                     }
                 });
             }
@@ -315,8 +319,10 @@ public class Banner extends FrameLayout implements OnPageChangeListener
         {
             mOnPageChangeListener.onPageScrollStateChanged(state);
         }
-        if (!isLoop)
+        if (!mIsLoop)
+        {
             return;
+        }
     }
 
     @Override
@@ -331,7 +337,7 @@ public class Banner extends FrameLayout implements OnPageChangeListener
     @Override
     public void onPageSelected(int position)
     {
-        currentItem = position;
+        mCurrentItem = position;
         if (mOnPageChangeListener != null)
         {
             mOnPageChangeListener.onPageSelected(toRealPosition(position));
@@ -340,7 +346,7 @@ public class Banner extends FrameLayout implements OnPageChangeListener
 
     public Banner setOnBannerClickListener(OnBannerClickListener listener)
     {
-        this.listener = listener;
+        this.mListener = listener;
         return this;
     }
 
